@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/smtp"
 	"strconv"
@@ -11,9 +12,9 @@ import (
 
 	"github.com/gorilla/pat"
 	"github.com/ian-kent/go-log/log"
-	"github.com/mailhog/MailHog-Server/config"
 	"github.com/mailhog/data"
 	"github.com/mailhog/storage"
+	"github.com/trewest/MailHog-Server/config"
 
 	"github.com/ian-kent/goose"
 )
@@ -332,7 +333,9 @@ func (apiv1 *APIv1) release_one(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	err = smtp.SendMail(cfg.Host+":"+cfg.Port, auth, "nobody@"+apiv1.config.Hostname, []string{cfg.Email}, bytes)
+	log.Printf("Forwarding mail to %s using %s:%s with %s auth from \"User\" <%s>", cfg.Email, cfg.Host, cfg.Port, auth, cfg.Username)
+	err = smtp.SendMail(cfg.Host+":"+cfg.Port, auth, fmt.Sprintf("\"User\" <%s@%s>", cfg.Username, apiv1.config.Hostname), []string{cfg.Email}, bytes)
+
 	if err != nil {
 		log.Printf("Failed to release message: %s", err)
 		w.WriteHeader(500)

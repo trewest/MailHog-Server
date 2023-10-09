@@ -7,12 +7,12 @@ import (
 	gohttp "net/http"
 
 	"github.com/ian-kent/go-log/log"
-	"github.com/mailhog/MailHog-Server/api"
-	"github.com/mailhog/MailHog-Server/config"
-	"github.com/mailhog/MailHog-Server/smtp"
 	"github.com/mailhog/MailHog-UI/assets"
-	comcfg "github.com/mailhog/MailHog/config"
 	"github.com/mailhog/http"
+	"github.com/trewest/MailHog-Server/api"
+	"github.com/trewest/MailHog-Server/config"
+	"github.com/trewest/MailHog-Server/smtp"
+	comcfg "github.com/trewest/MailHog/config"
 )
 
 var conf *config.Config
